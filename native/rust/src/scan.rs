@@ -83,15 +83,15 @@ impl ScanEngine {
             if self.cancel.load(Ordering::Acquire) {
                 break;
             }
-            
+
             log(1, format!("Scan cycle {}/{}", cycle + 1, self.config.scan_cycles));
-            
+
             let start = Instant::now();
             while start.elapsed() < Duration::from_millis(self.config.dwell_time_ms as u64) {
                 if self.cancel.load(Ordering::Acquire) {
                     break;
                 }
-                
+
                 match cap.next_packet() {
                     Ok(packet) => {
                         self.process_packet(&packet, &mut callback);
@@ -129,7 +129,7 @@ impl ScanEngine {
             if let Some(ap) = self.parse_beacon_or_probe_resp(packet) {
                 let is_new = !self.seen_aps.contains_key(&ap.bssid);
                 self.seen_aps.insert(ap.bssid.clone(), ap.clone());
-                
+
                 if is_new || self.config.mode == 1 { // Active scan mode
                     callback(ap);
                 }
@@ -153,7 +153,7 @@ impl ScanEngine {
         // Parse IEs starting after fixed parameters (timestamp 8, beacon interval 2, capability 2 = 12 bytes)
         // Then SSID IE
         let mut offset = 36; // Radiotap header (approx) + 802.11 header + fixed params
-        
+
         let mut ssid = String::new();
         let mut security_protocol = 0u8;
         let mut wps_enabled = false;
@@ -172,7 +172,7 @@ impl ScanEngine {
         while offset + 2 < packet.data.len() {
             let ie_id = packet.data[offset];
             let ie_len = packet.data[offset + 1] as usize;
-            
+
             if offset + 2 + ie_len > packet.data.len() {
                 break;
             }
@@ -224,7 +224,7 @@ impl ScanEngine {
         let interface = self.config.interface.clone();
         let dwell = self.config.dwell_time_ms;
         let cancel = self.cancel.clone();
-        
+
         let handle = thread::spawn(move || {
             let mut idx = 0;
             while !cancel.load(Ordering::Acquire) {
@@ -239,7 +239,7 @@ impl ScanEngine {
                 idx = (idx + 1) % channels.len();
             }
         });
-        
+
         self.channel_hopper = Some(handle);
     }
 
@@ -285,7 +285,7 @@ pub(crate) fn set_channel_system(interface: &str, channel: u8) -> Result<(), Str
             .args(["dev", interface, "set", "channel", &channel.to_string()])
             .output()
             .map_err(|e| e.to_string())?;
-        
+
         if !output.status.success() {
             return Err(String::from_utf8_lossy(&output.stderr).to_string());
         }

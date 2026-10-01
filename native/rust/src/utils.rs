@@ -6,7 +6,7 @@ pub fn parse_mac(mac: &str) -> Option<[u8; 6]> {
     if parts.len() != 6 {
         return None;
     }
-    
+
     let mut bytes = [0u8; 6];
     for (i, part) in parts.iter().enumerate() {
         bytes[i] = u8::from_str_radix(part, 16).ok()?;
@@ -30,7 +30,7 @@ pub fn cidr_to_range(cidr: &str) -> Option<(Ipv4Addr, Ipv4Addr)> {
     if parts.len() != 2 {
         return None;
     }
-    
+
     let ip = parts[0].parse::<Ipv4Addr>().ok()?;
     let prefix = parts[1].parse::<u8>().ok()?;
     if prefix > 32 {
@@ -45,7 +45,7 @@ pub fn cidr_to_range(cidr: &str) -> Option<(Ipv4Addr, Ipv4Addr)> {
     let ip_u32 = u32::from(ip);
     let network = ip_u32 & mask;
     let broadcast = network | !mask;
-    
+
     Some((Ipv4Addr::from(network), Ipv4Addr::from(broadcast)))
 }
 

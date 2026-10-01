@@ -302,10 +302,10 @@ class ReportService {
     double overallRisk,
   ) {
     return '''
-Security assessment "${assessment.name}" was conducted for ${project.client.name} 
+Security assessment "${assessment.name}" was conducted for ${project.client.name}
 (${project.client.company ?? 'N/A'}) as part of project "${project.name}".
 
-The assessment was performed from ${assessment.startedAt?.toString().split('.')[0] ?? 'N/A'} 
+The assessment was performed from ${assessment.startedAt?.toString().split('.')[0] ?? 'N/A'}
 to ${assessment.completedAt?.toString().split('.')[0] ?? 'N/A'}.
 
 A total of $totalFindings findings were identified:
@@ -406,7 +406,7 @@ Overall risk rating: ${_getRiskRating(overallRisk)}
 
   String _generateMethodology(Assessment assessment) {
     return '''
-This assessment followed the Penetration Testing Execution Standard (PTES) 
+This assessment followed the Penetration Testing Execution Standard (PTES)
 and OWASP Web Security Testing Guide (WSTG) methodologies.
 
 Assessment Type: ${assessment.type.name}

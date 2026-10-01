@@ -43,12 +43,12 @@ if (-not (Test-Path $NativeDir)) {
     Write-Host "Creating jniLibs directory..." -ForegroundColor Yellow
     New-Item -ItemType Directory -Path (Join-Path $NativeDir "arm64-v8a") -Force | Out-Null
     New-Item -ItemType Directory -Path (Join-Path $NativeDir "armeabi-v7a") -Force | Out-Null
-    
+
     Write-Host "NOTE: Native libraries (libmysecure_wifi.so, libmysecure_crypto.so) need to be compiled and placed in:" -ForegroundColor Yellow
     Write-Host "  $NativeDir\arm64-v8a\" -ForegroundColor Yellow
     Write-Host "  $NativeDir\armeabi-v7a\" -ForegroundColor Yellow
     Write-Host "For now, creating placeholder files..." -ForegroundColor Yellow
-    
+
     New-Item -ItemType File -Path (Join-Path $NativeDir "arm64-v8a\libmysecure_wifi.so") -Force | Out-Null
     New-Item -ItemType File -Path (Join-Path $NativeDir "arm64-v8a\libmysecure_crypto.so") -Force | Out-Null
     New-Item -ItemType File -Path (Join-Path $NativeDir "armeabi-v7a\libmysecure_wifi.so") -Force | Out-Null
@@ -70,7 +70,7 @@ if ($ApkPath) {
     $DestPath = Join-Path $ApkOutputDir "mySecure_v1.0.0_${Timestamp}.apk"
     Copy-Item $ApkPath.FullName -Destination $DestPath -Force
     Write-Host "APK copied to: $DestPath" -ForegroundColor Green
-    
+
     $Size = "{0:N2} MB" -f ($ApkPath.Length / 1MB)
     Write-Host "APK size: $Size" -ForegroundColor Green
 } else {

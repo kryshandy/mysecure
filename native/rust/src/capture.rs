@@ -27,7 +27,7 @@ impl HandshakeCapture {
 
     pub fn start(&mut self, mut callback: CaptureCallback, mut log: LogCallback) -> Result<(), String> {
         self.running = true;
-        
+
         let device = Device::list()
             .map_err(|e| format!("Failed to list devices: {}", e))?
             .into_iter()
@@ -62,7 +62,7 @@ impl HandshakeCapture {
                     if let Some((frame_type, data)) = self.process_packet(&packet) {
                         self.captured_frames.push((frame_type, data.clone()));
                         callback(self.target_bssid.clone(), data, frame_type);
-                        
+
                         // Check if we have complete handshake
                         if self.is_handshake_complete() {
                             log(1, "Complete 4-way handshake captured!".to_string());
@@ -125,10 +125,10 @@ impl HandshakeCapture {
             if data.len() < 7 {
                 continue;
             }
-            
+
             let eapol_type = data[1];
             let key_info = u16::from_be_bytes([data[5], data[6]]);
-            
+
             // Check for EAPOL-Key frames
             if eapol_type == 3 { // EAPOL-Key
                 let is_pairwise = (key_info & 0x0008) != 0;
@@ -178,7 +178,7 @@ impl PmkidCapture {
 
     pub fn start(&mut self, mut callback: PmkidCallback, mut log: LogCallback) -> Result<(), String> {
         self.running = true;
-        
+
         let device = Device::list()
             .map_err(|e| format!("Failed to list devices: {}", e))?
             .into_iter()
@@ -236,7 +236,7 @@ impl PmkidCapture {
         // Check for EAPOL-Key with Key Data field containing PMKID
         let frame_control = u16::from_le_bytes([packet.data[0], packet.data[1]]);
         let frame_type = (frame_control >> 2) & 0x3;
-        
+
         if frame_type != 2 {
             return None;
         }
@@ -246,7 +246,7 @@ impl PmkidCapture {
         if packet.data.len() < llc_start + 8 {
             return None;
         }
-        
+
         let ethertype = u16::from_be_bytes([packet.data[llc_start + 6], packet.data[llc_start + 7]]);
         if ethertype != 0x888e {
             return None;
@@ -268,13 +268,13 @@ impl PmkidCapture {
         }
 
         let key_data = &eapol_data[99..99 + key_data_len];
-        
+
         // Parse Key Data for PMKID (Type 0x04)
         let mut offset = 0;
         while offset + 4 <= key_data.len() {
             let key_type = key_data[offset];
             let key_len = key_data[offset + 1] as usize;
-            
+
             if offset + 2 + key_len > key_data.len() {
                 break;
             }

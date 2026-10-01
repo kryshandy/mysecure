@@ -23,7 +23,7 @@ impl WpsTester {
 
     pub fn start(&mut self, mut callback: WpsCallback, mut log: LogCallback) -> Result<(), String> {
         self.running = true;
-        
+
         super::scan::set_channel_system(&self.interface, self.channel)
             .map_err(|e| format!("Failed to set channel: {}", e))?;
 
@@ -53,7 +53,7 @@ impl WpsTester {
 
     fn try_pixie_dust(&self, log: &mut LogCallback) -> Result<String, String> {
         log(1, "Attempting Pixie-Dust attack...".to_string());
-        
+
         // Use reaver with Pixie-Dust (-K 1)
         let output = Command::new("reaver")
             .args([
@@ -67,7 +67,7 @@ impl WpsTester {
             .map_err(|e| format!("Failed to execute reaver: {}", e))?;
 
         let stdout = String::from_utf8_lossy(&output.stdout);
-        
+
         // Parse output for PIN
         for line in stdout.lines() {
             if line.contains("WPS PIN:") || line.contains("PIN:") {
@@ -83,7 +83,7 @@ impl WpsTester {
 
     fn try_null_pin(&self, log: &mut LogCallback) -> Result<String, String> {
         log(1, "Trying null PIN...".to_string());
-        
+
         let output = Command::new("reaver")
             .args([
                 "-i", &self.interface,
@@ -96,7 +96,7 @@ impl WpsTester {
             .map_err(|e| format!("Failed to execute reaver: {}", e))?;
 
         let stdout = String::from_utf8_lossy(&output.stdout);
-        
+
         for line in stdout.lines() {
             if line.contains("WPS PIN:") {
                 if let Some(pin) = line.split_whitespace().find(|s| s.len() == 8 && s.chars().all(|c| c.is_ascii_digit())) {
@@ -111,7 +111,7 @@ impl WpsTester {
 
     fn try_brute_force(&self, log: &mut LogCallback) -> Result<String, String> {
         log(1, "Starting brute force (first half)...".to_string());
-        
+
         // This is very slow, just attempt first 10000
         let output = Command::new("reaver")
             .args([
@@ -126,7 +126,7 @@ impl WpsTester {
             .map_err(|e| format!("Failed to execute reaver: {}", e))?;
 
         let stdout = String::from_utf8_lossy(&output.stdout);
-        
+
         for line in stdout.lines() {
             if line.contains("WPS PIN:") {
                 if let Some(pin) = line.split_whitespace().find(|s| s.len() == 8 && s.chars().all(|c| c.is_ascii_digit())) {

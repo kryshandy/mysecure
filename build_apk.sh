@@ -70,7 +70,7 @@ if [ -n "$APK_PATH" ]; then
     DEST_PATH="$APK_OUTPUT_DIR/mySecure_v1.0.0_${TIMESTAMP}.apk"
     cp "$APK_PATH" "$DEST_PATH"
     echo -e "${GREEN}APK copied to: $DEST_PATH${NC}"
-    
+
     # Get file size
     SIZE=$(du -h "$DEST_PATH" | cut -f1)
     echo -e "${GREEN}APK size: $SIZE${NC}"

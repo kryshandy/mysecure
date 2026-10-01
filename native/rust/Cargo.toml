@@ -1,0 +1,38 @@
+// Cargo.toml for mysecure_wifi native library
+[package]
+name = "mysecure_wifi"
+version = "1.0.0"
+edition = "2021"
+description = "Native WiFi scanning and capture library for mySecure"
+license = "MIT"
+
+[lib]
+name = "mysecure_wifi"
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+libc = "0.2"
+pcap = "1.0"
+pnet = "0.33"
+pnet_datalink = "0.33"
+pnet_packet = "0.33"
+byteorder = "1.5"
+hex = "0.4"
+log = "0.4"
+env_logger = "0.10"
+thiserror = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+bytes = "1.0"
+macaddr = "1.0"
+hmac = "0.12"
+pbkdf2 = "0.12"
+sha1 = "0.10"
+subtle = "2.5"
+
+[build-dependencies]
+cc = "1.0"
+
+[features]
+default = []
+android = []
+ios = []

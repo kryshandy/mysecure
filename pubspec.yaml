@@ -1,0 +1,91 @@
+name: mysecure
+description: "mySecure - Professional WiFi Security Audit Platform"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  archive: ^4.0.9
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Serialization
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+
+  # Network & Platform
+  network_info_plus: ^8.2.1
+  permission_handler: ^11.3.1
+  device_info_plus: ^13.2.0
+
+  # WiFi Scanning
+  wifi_scan: ^0.4.0+1
+
+  # Storage
+  drift: ^2.18.0
+  path_provider: ^2.1.1
+  package_info_plus: ^10.2.1
+  path: ^1.9.0
+
+  # Security & Crypto
+  encrypt: ^5.0.3
+  pointycastle: ^3.7.3
+  crypto: ^3.0.3
+
+  # FFI & Native
+  ffi: ^2.1.0
+
+  # Utils
+  collection: ^1.18.0
+  intl: ^0.19.0
+  uuid: ^4.4.0
+  logger: ^2.4.0
+  equatable: ^2.0.5
+
+  # UI Components
+  fl_chart: ^0.68.0
+  syncfusion_flutter_charts: ^26.1.35
+  material_symbols_icons: ^4.2673.0
+  flutter_animate: ^4.5.0
+  flutter_slidable: ^3.1.1
+
+  # File Handling
+  file_picker: ^13.1.0
+  # 13.2+ misdetects legacy Kotlin on AGP 9 with Flutter 3.44.
+  share_plus: 13.1.0
+  open_filex: ^4.3.2
+
+  # Background & Services
+  flutter_background_service: ^5.0.5
+  flutter_background_service_android: ^6.2.3
+
+  # PDF Generation
+  pdf: ^3.10.7
+  printing: ^5.12.0
+
+  # WebSocket for real-time
+  web_socket_channel: ^3.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  riverpod_generator: ^2.3.9
+  build_runner: ^2.4.7
+  freezed: ^2.5.2
+  json_serializable: ^6.7.1
+  drift_dev: ^2.18.0
+  custom_lint: ^0.6.4
+  riverpod_lint: ^2.3.7
+
+flutter:
+  uses-material-design: true
